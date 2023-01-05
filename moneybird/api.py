@@ -38,6 +38,13 @@ class MoneyBird(object):
         )
         return self._process_response(response)
 
+    # Get all custom fields
+    def get_custom_fields(self, administration_id: int):
+        response = self.session.get(
+            url=self._get_url(administration_id, 'custom_fields')
+        )
+        return self._process_response(response)
+
     # Get specific resource
     def get_resource(self, resource_path: str, administration_id: int = None):
         """
