@@ -24,6 +24,12 @@ class MoneyBird(object):
         self.session = None
         self.renew_session()
 
+    def get_administrations(self):
+        response = self.session.get(
+            url=self._get_url('administrations')
+        )
+        return self._process_response(response)
+
     def get(self, resource_path: str, administration_id: int = None):
         """
         Performs a GET request to the endpoint identified by the resource path.
