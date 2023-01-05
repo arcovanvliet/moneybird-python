@@ -24,13 +24,22 @@ class MoneyBird(object):
         self.session = None
         self.renew_session()
 
+    # Contact all administrations
     def get_administrations(self):
         response = self.session.get(
-            url=self._get_url('administrations')
+            url=self._get_url(None, 'administrations')
         )
         return self._process_response(response)
 
-    def get(self, resource_path: str, administration_id: int = None):
+    # Get all contacts
+    def get_contacts(self, administration_id: int):
+        response = self.session.get(
+            url=self._get_url(administration_id, 'contacts')
+        )
+        return self._process_response(response)
+
+    # Get specific resource
+    def get_resource(self, resource_path: str, administration_id: int = None):
         """
         Performs a GET request to the endpoint identified by the resource path.
 
@@ -134,9 +143,9 @@ class MoneyBird(object):
         url = urljoin(cls.base_url, '%s/' % cls.version)
 
         if administration_id is not None:
-            url = urljoin(url, '{administration_id}/')
+            url = urljoin(url, '%s/' % administration_id)
 
-        url = urljoin(url, '{resource_path}.json')
+        url = urljoin(url, '%s.json' % resource_path)
 
         return url
 
